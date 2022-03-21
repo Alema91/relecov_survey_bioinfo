@@ -12,6 +12,7 @@ library(janitor, quietly = TRUE, warn.conflicts = FALSE)
 library(tibble, quietly = TRUE, warn.conflicts = FALSE)
 library(scales, quietly = TRUE, warn.conflicts = FALSE)
 library(RColorBrewer, quietly = TRUE, warn.conflicts = FALSE)
+library(forcats, quietly = TRUE, warn.conflicts = FALSE)
 
 ### Excel ----
 
@@ -82,3 +83,53 @@ ggplot(general_data, aes(x = comunidad, fill = centro)) +
         axis.text.y = element_text(size = 7)
     )
 ggsave("Graficos/survey_general.png")
+
+### datos parsed bioinfo info ----
+
+clases_expertise <- c(
+    "Microbiology", "Genetics",
+    "Biostatistics", "Microbiology", "Genetics", "Mathematics", "Biochemistry",
+    "Microbiology", "Genetics", "Biochemistry",
+    "System administration", "Biostatistics", "Data analysis/science", "Microbiology", "Genetics", "Informatics",
+    "Microbiology", "Genetics",
+    "Data analysis/science", "Microbiology", "Genetics",
+    "Microbiology", "Genetics",
+    "Biostatistics", "Microbiology", "Genetics", "Biochemistry",
+    "Data analysis/science", "Genetics", "Informatics",
+    "Biostatistics", "Data analysis/science", "Microbiology", "Genetics", "Informatics", "Evolutionary biology", "Cancer genomics", "Anatomic pathology", "Immunology",
+    "Data analysis/science", "Microbiology", "Genetics",
+    "Biostatistics", "Data analysis/science", "Microbiology", "Genetics",
+    "Statistics", "Biostatistics", "Data analysis/science", "Microbiology",
+    "Microbiology",
+    "Biostatistics", "Data analysis/science", "Microbiology",
+    "System administration", "Statistics", "Biostatistics", "Data analysis/science", "Microbiology", "Genetics", "Mathematics", "Informatics", "Human genetics",
+    "Statistics", "Biostatistics", "Data analysis/science", "Microbiology", "Genetics", "Informatics",
+    "System administration", "Statistics", "Biostatistics", "Data analysis/science", "Microbiology", "Genetics", "Informatics", "Biochemistry"
+)
+
+data_expertise <- data.frame(expertise = clases_expertise)
+
+data_expertise_perc <- data_expertise %>%
+    group_by(expertise) %>%
+    summarise(count = n()) %>%
+    mutate(perc = round((count / sum(count)) * 100, 3))
+
+data_expertise_perc$expertise <- factor(data_expertise_perc$expertise, levels = c("Microbiology", "Genetics", "Data analysis/science", "Biostatistics", "Informatics", "Statistics", "Biochemistry", "System administration", "Mathematics", "Immunology", "Human genetics", "Evolutionary biology", "Cancer genomics", "Anatomic pathology"))
+
+ggplot(data_expertise_perc, aes(expertise, perc)) +
+    geom_bar(stat = "identity") +
+    labs(x = "", y = "", title = "") +
+    theme(
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 6),
+        axis.text.y = element_text(size = 7)
+    )
+ggsave("Graficos/survey_expertises_percentage.png")
+
+ggplot(data_expertise, aes(fct_infreq(expertise))) +
+    geom_bar() +
+    labs(x = "", y = "", title = "") +
+    theme(
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 6),
+        axis.text.y = element_text(size = 7)
+    )
+ggsave("Graficos/survey_expertises_count.png")
