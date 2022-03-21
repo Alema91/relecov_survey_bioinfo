@@ -10,6 +10,8 @@ library(readxl, quietly = TRUE, warn.conflicts = FALSE)
 library(ggplot2, quietly = TRUE, warn.conflicts = FALSE)
 library(janitor, quietly = TRUE, warn.conflicts = FALSE)
 library(tibble, quietly = TRUE, warn.conflicts = FALSE)
+library(scales, quietly = TRUE, warn.conflicts = FALSE)
+library(RColorBrewer, quietly = TRUE, warn.conflicts = FALSE)
 
 ### Excel ----
 
@@ -53,8 +55,28 @@ general_data <- data.frame(
 #### plot general ----
 
 ggplot(general_data, aes(x = comunidad, fill = centro)) +
-    geom_bar(aes(fill = centro)) +
+    geom_bar() +
     labs(x = "", y = "", title = "") +
+    scale_fill_manual("Centros", values = c(
+        "Hospital Joan XXIII" = "#E41A1C",
+        "Hospital Universitari Vall d’Hebron" = "#E41A1C",
+        "Hospital Dr. Josep Trueta" = "#E41A1C",
+        "Hospital Clínic de Barcelona" = "#E41A1C",
+        "Banc de Sang i Teixits Catalunya" = "#E41A1C",
+        "Hospital Universitario La Paz" = "#377EB8",
+        "Hospital Universitario Gregorio Marañón" = "#377EB8",
+        "Hospital Universitario Ramón y Cajal" = "#377EB8",
+        "Hospital Universitario 12 de Octubre" = "#377EB8",
+        "Hospital de A Coruña" = "#4DAF4A",
+        "Complejo Hospitalario de Santiago de Compostela" = "#4DAF4A",
+        "Hospital General Universitario de Alicante" = "#984EA3",
+        "FISABIO CSIC" = "#984EA3",
+        "Hospital Universitario Son Espases" = "#FF7F00",
+        "Instituto Tecnológico y de Energías Renovables" = "#FFFF33",
+        "Hospital Universitario Marqués de Valdecilla" = "#A65628",
+        "Hospital Universitario de Ciudad Real" = "#F781BF",
+        "Fundación Rioja Salud" = "#999999"
+    )) +
     theme(
         axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 6),
         axis.text.y = element_text(size = 7)
