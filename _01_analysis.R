@@ -31,12 +31,14 @@ level_centros <- c(
     "Hospital Dr. Josep Trueta",
     "Hospital Clínic de Barcelona",
     "Banc de Sang i Teixits Catalunya",
+    "Hospital Universitari Germans Trias i Pujol",
     "Hospital Universitario La Paz",
     "Hospital Universitario Gregorio Marañón",
     "Hospital Universitario Ramón y Cajal",
     "Hospital Universitario 12 de Octubre",
     "Hospital de A Coruña",
     "Complejo Hospitalario de Santiago de Compostela",
+    "Hospital de Vigo",
     "Hospital General Universitario de Alicante",
     "FISABIO CSIC",
     "Hospital Universitario Son Espases",
@@ -64,12 +66,14 @@ ggplot(general_data, aes(x = comunidad, fill = centro)) +
         "Hospital Dr. Josep Trueta" = "#E41A1C",
         "Hospital Clínic de Barcelona" = "#E41A1C",
         "Banc de Sang i Teixits Catalunya" = "#E41A1C",
+        "Hospital Universitari Germans Trias i Pujol" = "#E41A1C",
         "Hospital Universitario La Paz" = "#377EB8",
         "Hospital Universitario Gregorio Marañón" = "#377EB8",
         "Hospital Universitario Ramón y Cajal" = "#377EB8",
         "Hospital Universitario 12 de Octubre" = "#377EB8",
         "Hospital de A Coruña" = "#4DAF4A",
         "Complejo Hospitalario de Santiago de Compostela" = "#4DAF4A",
+        "Hospital de Vigo" = "#4DAF4A",
         "Hospital General Universitario de Alicante" = "#984EA3",
         "FISABIO CSIC" = "#984EA3",
         "Hospital Universitario Son Espases" = "#FF7F00",
@@ -81,8 +85,12 @@ ggplot(general_data, aes(x = comunidad, fill = centro)) +
     theme(
         axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 6),
         axis.text.y = element_text(size = 7)
-    )
-ggsave("Graficos/survey_general.png")
+    ) +
+    coord_polar("y", start = 0)
+ggsave("Graficos/survey_general_pie.png")
+
+ggplot(general_data, aes(x = "", y = value, fill = group)) +
+    geom_bar(width = 1, stat = "identity")
 
 ### datos parsed bioinfo info ----
 
