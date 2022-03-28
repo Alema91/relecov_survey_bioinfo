@@ -112,7 +112,12 @@ bioinfo_data <- data.frame(
     q_2 = as.character(survey_bioinfo$`Does your organization have experience in the use of HTS/NGS technologies?`),
     q_3 = as.character(survey_bioinfo$`How much experience does your organization have in the use of HTS/NGS technologies?`),
     q_4 = as.character(survey_bioinfo$`Where do you work?`),
-    q_5 = as.character(survey_bioinfo$`If you do not work in a bioinformatics unit, does your organization have one?`)
+    q_5 = as.character(survey_bioinfo$`If you do not work in a bioinformatics unit, does your organization have one?`),
+    q_6 = as.character(survey_bioinfo$`How many bioinformaticians work in your environment?`),
+    q_7 = as.character(survey_bioinfo$`Which is your academic background?`),
+    q_8 = as.character(survey_bioinfo$`Do you have a post graduate training in Bioinformatics? More than one option can be chosen.`),
+    q_9 = as.character(survey_bioinfo$`Choose the area of expertise that you or other people in your team have`),
+    q_10 = as.character(survey_bioinfo$`Do you use HTS in other organisims besides SARS-CoV-2? If so, in which organisim are you applying HTS technology?`)
 )
 
 # Q1
@@ -159,7 +164,7 @@ bioinfo_data_q3 <- bioinfo_data %>%
     group_by(q_3) %>%
     summarise(count = n())
 
-colnames(bioinfo_data_q2) <- c("question_1_3", "value")
+colnames(bioinfo_data_q3) <- c("question_1_3", "value")
 
 ggplot(bioinfo_data_q3, aes(x = "", y = value, fill = question_1_3)) +
     geom_col(color = "black") +
@@ -191,7 +196,26 @@ ggplot(bioinfo_data_q4, aes(x = "", y = value, fill = question_1_4)) +
     scale_fill_brewer(palette = "Spectral")
 ggsave("Graficos/qc_survey_bioinfo_4.jpeg")
 
-# Q4
+# Q5
+
+bioinfo_data_q5 <- bioinfo_data %>%
+    group_by(q_5) %>%
+    summarise(count = n())
+
+colnames(bioinfo_data_q5) <- c("question_1_5", "value")
+
+ggplot(bioinfo_data_q5, aes(x = "", y = value, fill = question_1_5)) +
+    geom_col(color = "black") +
+    guides(fill = guide_legend(title = "Answers")) +
+    geom_text(aes(label = value),
+        position = position_stack(vjust = 0.6)
+    ) +
+    coord_polar(theta = "y") +
+    labs(y = "", x = "", title = "Where do you work?") +
+    scale_fill_brewer(palette = "Spectral")
+ggsave("Graficos/qc_survey_bioinfo_5.jpeg")
+
+# Q5
 
 bioinfo_data_q5 <- bioinfo_data %>%
     group_by(q_5) %>%
