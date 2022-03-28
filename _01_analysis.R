@@ -13,6 +13,7 @@ library(tibble, quietly = TRUE, warn.conflicts = FALSE)
 library(scales, quietly = TRUE, warn.conflicts = FALSE)
 library(RColorBrewer, quietly = TRUE, warn.conflicts = FALSE)
 library(forcats, quietly = TRUE, warn.conflicts = FALSE)
+library(scales, quietly = TRUE, warn.conflicts = FALSE)
 
 ### Excel ----
 
@@ -85,12 +86,130 @@ ggplot(general_data, aes(x = comunidad, fill = centro)) +
     theme(
         axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 6),
         axis.text.y = element_text(size = 7)
-    ) +
-    coord_polar("y", start = 0)
-ggsave("Graficos/survey_general_pie.png")
+    )
+ggsave("Graficos/survey_general.png")
 
-ggplot(general_data, aes(x = "", y = value, fill = group)) +
-    geom_bar(width = 1, stat = "identity")
+str(general_data)
+str(df)
+
+df <- data.frame(
+    group = c("Male", "Female", "Child"),
+    value = c(25, 25, 50)
+)
+
+
+ggplot(df, aes(x = "", y = value, fill = group)) +
+    geom_bar(width = 1, stat = "identity") +
+    coord_polar("y", start = 0)
+
+# Bioinfo info
+
+survey_bioinfo <- read_excel(dir_excel[1], sheet = 3)
+
+bioinfo_data <- data.frame(
+    id = as.character(sort(survey_bioinfo$`Relecov-ID`)),
+    q_1 = as.character(survey_bioinfo$`In which role are you replying to this questionnaire?`),
+    q_2 = as.character(survey_bioinfo$`Does your organization have experience in the use of HTS/NGS technologies?`),
+    q_3 = as.character(survey_bioinfo$`How much experience does your organization have in the use of HTS/NGS technologies?`),
+    q_4 = as.character(survey_bioinfo$`Where do you work?`),
+    q_5 = as.character(survey_bioinfo$`If you do not work in a bioinformatics unit, does your organization have one?`)
+)
+
+# Q1
+
+bioinfo_data_q1 <- bioinfo_data %>%
+    group_by(q_1) %>%
+    summarise(count = n())
+
+colnames(bioinfo_data_q1) <- c("question_1_1", "value")
+
+ggplot(bioinfo_data_q1, aes(x = "", y = value, fill = question_1_1)) +
+    geom_col(color = "black") +
+    guides(color = guide_legend(title = "Samples"), fill = guide_legend(title = "Answers")) +
+    geom_text(aes(label = value),
+        position = position_stack(vjust = 0.6)
+    ) +
+    coord_polar(theta = "y") +
+    labs(y = "", x = "", title = "In which role are you replying to this questionnaire?") +
+    scale_fill_brewer(palette = "Spectral")
+ggsave("Graficos/qc_survey_bioinfo_1.png")
+
+# Q2
+
+bioinfo_data_q2 <- bioinfo_data %>%
+    group_by(q_2) %>%
+    summarise(count = n())
+
+colnames(bioinfo_data_q2) <- c("question_1_2", "value")
+
+ggplot(bioinfo_data_q2, aes(x = "", y = value, fill = question_1_2)) +
+    geom_col(color = "black") +
+    guides(fill = guide_legend(title = "Answers")) +
+    geom_text(aes(label = value),
+        position = position_stack(vjust = 0.6)
+    ) +
+    coord_polar(theta = "y") +
+    labs(y = "", x = "", title = "Does your organization have experience in the use of HTS/NGS technologies?") +
+    scale_fill_brewer(palette = "Spectral")
+ggsave("Graficos/qc_survey_bioinfo_2.jpeg")
+
+# Q3
+
+bioinfo_data_q3 <- bioinfo_data %>%
+    group_by(q_3) %>%
+    summarise(count = n())
+
+colnames(bioinfo_data_q2) <- c("question_1_3", "value")
+
+ggplot(bioinfo_data_q3, aes(x = "", y = value, fill = question_1_3)) +
+    geom_col(color = "black") +
+    guides(fill = guide_legend(title = "Answers")) +
+    geom_text(aes(label = value),
+        position = position_stack(vjust = 0.6)
+    ) +
+    coord_polar(theta = "y") +
+    labs(y = "", x = "", title = "How much experience does your organization have in the use of HTS/NGS technologies?") +
+    scale_fill_brewer(palette = "Spectral")
+ggsave("Graficos/qc_survey_bioinfo_3.jpeg")
+
+# Q4
+
+bioinfo_data_q4 <- bioinfo_data %>%
+    group_by(q_4) %>%
+    summarise(count = n())
+
+colnames(bioinfo_data_q4) <- c("question_1_4", "value")
+
+ggplot(bioinfo_data_q4, aes(x = "", y = value, fill = question_1_4)) +
+    geom_col(color = "black") +
+    guides(fill = guide_legend(title = "Answers")) +
+    geom_text(aes(label = value),
+        position = position_stack(vjust = 0.6)
+    ) +
+    coord_polar(theta = "y") +
+    labs(y = "", x = "", title = "Where do you work?") +
+    scale_fill_brewer(palette = "Spectral")
+ggsave("Graficos/qc_survey_bioinfo_4.jpeg")
+
+# Q4
+
+bioinfo_data_q5 <- bioinfo_data %>%
+    group_by(q_5) %>%
+    summarise(count = n())
+
+colnames(bioinfo_data_q5) <- c("question_1_5", "value")
+
+ggplot(bioinfo_data_q5, aes(x = "", y = value, fill = question_1_5)) +
+    geom_col(color = "black") +
+    guides(fill = guide_legend(title = "Answers")) +
+    geom_text(aes(label = value),
+        position = position_stack(vjust = 0.6)
+    ) +
+    coord_polar(theta = "y") +
+    labs(y = "", x = "", title = "Where do you work?") +
+    scale_fill_brewer(palette = "Spectral")
+ggsave("Graficos/qc_survey_bioinfo_5.jpeg")
+
 
 ### datos parsed bioinfo info ----
 
