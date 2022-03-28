@@ -120,6 +120,8 @@ bioinfo_data <- data.frame(
     q_10 = as.character(survey_bioinfo$`Do you use HTS in other organisims besides SARS-CoV-2? If so, in which organisim are you applying HTS technology?`)
 )
 
+36 + 7
+
 # Q1
 
 bioinfo_data_q1 <- bioinfo_data %>%
