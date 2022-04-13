@@ -107,7 +107,7 @@ ggplot(df, aes(x = "", y = value, fill = group)) +
 survey_bioinfo <- read_excel(dir_excel[1], sheet = 3)
 
 bioinfo_data <- data.frame(
-    id = as.character(sort(survey_bioinfo$`Relecov-ID`)),
+    id = as.character(sort(survey_bioinfo$ID)),
     q_1 = as.character(survey_bioinfo$`In which role are you replying to this questionnaire?`),
     q_2 = as.character(survey_bioinfo$`Does your organization have experience in the use of HTS/NGS technologies?`),
     q_3 = as.character(survey_bioinfo$`How much experience does your organization have in the use of HTS/NGS technologies?`),
@@ -120,169 +120,66 @@ bioinfo_data <- data.frame(
     q_10 = as.character(survey_bioinfo$`Do you use HTS in other organisims besides SARS-CoV-2? If so, in which organisim are you applying HTS technology?`)
 )
 
-36 + 7
 
 # Q1
 
-bioinfo_data_q1 <- bioinfo_data %>%
-    group_by(q_1) %>%
-    summarise(count = n())
-
-colnames(bioinfo_data_q1) <- c("question_1_1", "value")
-
-ggplot(bioinfo_data_q1, aes(x = "", y = value, fill = question_1_1)) +
-    geom_col(color = "black") +
-    guides(color = guide_legend(title = "Samples"), fill = guide_legend(title = "Answers")) +
-    geom_text(aes(label = value),
-        position = position_stack(vjust = 0.6)
-    ) +
-    coord_polar(theta = "y") +
-    labs(y = "", x = "", title = "In which role are you replying to this questionnaire?") +
-    scale_fill_brewer(palette = "Spectral")
-ggsave("Graficos/qc_survey_bioinfo_1.png")
+ggplot(bioinfo_data, aes(q_1)) +
+    geom_bar(fill = "#1F77B4") +
+    guides(fill = guide_legend(title = "Plataforma")) +
+    labs(y = "Respuestas", x = "", title = "") +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    theme(
+        text = element_text(size = 18),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+    )
+ggsave("Graficos/survey_bio_q1.png")
 
 # Q2
-
-bioinfo_data_q2 <- bioinfo_data %>%
-    group_by(q_2) %>%
-    summarise(count = n())
-
-colnames(bioinfo_data_q2) <- c("question_1_2", "value")
-
-ggplot(bioinfo_data_q2, aes(x = "", y = value, fill = question_1_2)) +
-    geom_col(color = "black") +
-    guides(fill = guide_legend(title = "Answers")) +
-    geom_text(aes(label = value),
-        position = position_stack(vjust = 0.6)
-    ) +
-    coord_polar(theta = "y") +
-    labs(y = "", x = "", title = "Does your organization have experience in the use of HTS/NGS technologies?") +
-    scale_fill_brewer(palette = "Spectral")
-ggsave("Graficos/qc_survey_bioinfo_2.jpeg")
+ggplot(bioinfo_data, aes(q_2)) +
+    geom_bar(fill = "#1F77B4") +
+    guides(fill = guide_legend(title = "Plataforma")) +
+    labs(y = "Respuestas", x = "", title = "") +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    theme(
+        text = element_text(size = 18),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+    )
+ggsave("Graficos/survey_bio_q2.png")
 
 # Q3
-
-bioinfo_data_q3 <- bioinfo_data %>%
-    group_by(q_3) %>%
-    summarise(count = n())
-
-colnames(bioinfo_data_q3) <- c("question_1_3", "value")
-
-ggplot(bioinfo_data_q3, aes(x = "", y = value, fill = question_1_3)) +
-    geom_col(color = "black") +
-    guides(fill = guide_legend(title = "Answers")) +
-    geom_text(aes(label = value),
-        position = position_stack(vjust = 0.6)
-    ) +
-    coord_polar(theta = "y") +
-    labs(y = "", x = "", title = "How much experience does your organization have in the use of HTS/NGS technologies?") +
-    scale_fill_brewer(palette = "Spectral")
-ggsave("Graficos/qc_survey_bioinfo_3.jpeg")
+ggplot(bioinfo_data, aes(q_3)) +
+    geom_bar(fill = "#1F77B4") +
+    guides(fill = guide_legend(title = "Plataforma")) +
+    labs(y = "Respuestas", x = "", title = "") +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    theme(
+        text = element_text(size = 18),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+    )
+ggsave("Graficos/survey_bio_q3.png")
 
 # Q4
-
-bioinfo_data_q4 <- bioinfo_data %>%
-    group_by(q_4) %>%
-    summarise(count = n())
-
-colnames(bioinfo_data_q4) <- c("question_1_4", "value")
-
-ggplot(bioinfo_data_q4, aes(x = "", y = value, fill = question_1_4)) +
-    geom_col(color = "black") +
-    guides(fill = guide_legend(title = "Answers")) +
-    geom_text(aes(label = value),
-        position = position_stack(vjust = 0.6)
-    ) +
-    coord_polar(theta = "y") +
-    labs(y = "", x = "", title = "Where do you work?") +
-    scale_fill_brewer(palette = "Spectral")
-ggsave("Graficos/qc_survey_bioinfo_4.jpeg")
+ggplot(bioinfo_data, aes(q_4)) +
+    geom_bar(fill = "#1F77B4") +
+    guides(fill = guide_legend(title = "Plataforma")) +
+    labs(y = "Respuestas", x = "", title = "") +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    theme(
+        text = element_text(size = 18),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+    )
+ggsave("Graficos/survey_bio_q4.png")
 
 # Q5
-
-bioinfo_data_q5 <- bioinfo_data %>%
-    group_by(q_5) %>%
-    summarise(count = n())
-
-colnames(bioinfo_data_q5) <- c("question_1_5", "value")
-
-ggplot(bioinfo_data_q5, aes(x = "", y = value, fill = question_1_5)) +
-    geom_col(color = "black") +
-    guides(fill = guide_legend(title = "Answers")) +
-    geom_text(aes(label = value),
-        position = position_stack(vjust = 0.6)
-    ) +
-    coord_polar(theta = "y") +
-    labs(y = "", x = "", title = "Where do you work?") +
-    scale_fill_brewer(palette = "Spectral")
-ggsave("Graficos/qc_survey_bioinfo_5.jpeg")
-
-# Q5
-
-bioinfo_data_q5 <- bioinfo_data %>%
-    group_by(q_5) %>%
-    summarise(count = n())
-
-colnames(bioinfo_data_q5) <- c("question_1_5", "value")
-
-ggplot(bioinfo_data_q5, aes(x = "", y = value, fill = question_1_5)) +
-    geom_col(color = "black") +
-    guides(fill = guide_legend(title = "Answers")) +
-    geom_text(aes(label = value),
-        position = position_stack(vjust = 0.6)
-    ) +
-    coord_polar(theta = "y") +
-    labs(y = "", x = "", title = "Where do you work?") +
-    scale_fill_brewer(palette = "Spectral")
-ggsave("Graficos/qc_survey_bioinfo_5.jpeg")
-
+ggplot(bioinfo_data, aes(q_5)) +
+    geom_bar(fill = "#1F77B4") +
+    guides(fill = guide_legend(title = "Plataforma")) +
+    labs(y = "Respuestas", x = "", title = "") +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    theme(
+        text = element_text(size = 18),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+    )
+ggsave("Graficos/survey_bio_q5.png")
 
 ### datos parsed bioinfo info ----
-
-clases_expertise <- c(
-    "Microbiology", "Genetics",
-    "Biostatistics", "Microbiology", "Genetics", "Mathematics", "Biochemistry",
-    "Microbiology", "Genetics", "Biochemistry",
-    "System administration", "Biostatistics", "Data analysis/science", "Microbiology", "Genetics", "Informatics",
-    "Microbiology", "Genetics",
-    "Data analysis/science", "Microbiology", "Genetics",
-    "Microbiology", "Genetics",
-    "Biostatistics", "Microbiology", "Genetics", "Biochemistry",
-    "Data analysis/science", "Genetics", "Informatics",
-    "Biostatistics", "Data analysis/science", "Microbiology", "Genetics", "Informatics", "Evolutionary biology", "Cancer genomics", "Anatomic pathology", "Immunology",
-    "Data analysis/science", "Microbiology", "Genetics",
-    "Biostatistics", "Data analysis/science", "Microbiology", "Genetics",
-    "Statistics", "Biostatistics", "Data analysis/science", "Microbiology",
-    "Microbiology",
-    "Biostatistics", "Data analysis/science", "Microbiology",
-    "System administration", "Statistics", "Biostatistics", "Data analysis/science", "Microbiology", "Genetics", "Mathematics", "Informatics", "Human genetics",
-    "Statistics", "Biostatistics", "Data analysis/science", "Microbiology", "Genetics", "Informatics",
-    "System administration", "Statistics", "Biostatistics", "Data analysis/science", "Microbiology", "Genetics", "Informatics", "Biochemistry"
-)
-
-data_expertise <- data.frame(expertise = clases_expertise)
-
-data_expertise_perc <- data_expertise %>%
-    group_by(expertise) %>%
-    summarise(count = n()) %>%
-    mutate(perc = round((count / sum(count)) * 100, 3))
-
-data_expertise_perc$expertise <- factor(data_expertise_perc$expertise, levels = c("Microbiology", "Genetics", "Data analysis/science", "Biostatistics", "Informatics", "Statistics", "Biochemistry", "System administration", "Mathematics", "Immunology", "Human genetics", "Evolutionary biology", "Cancer genomics", "Anatomic pathology"))
-
-ggplot(data_expertise_perc, aes(expertise, perc)) +
-    geom_bar(stat = "identity") +
-    labs(x = "", y = "", title = "") +
-    theme(
-        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 6),
-        axis.text.y = element_text(size = 7)
-    )
-ggsave("Graficos/survey_expertises_percentage.png")
-
-ggplot(data_expertise, aes(fct_infreq(expertise))) +
-    geom_bar() +
-    labs(x = "", y = "", title = "") +
-    theme(
-        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 6),
-        axis.text.y = element_text(size = 7)
-    )
-ggsave("Graficos/survey_expertises_count.png")
