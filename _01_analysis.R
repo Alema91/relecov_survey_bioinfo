@@ -182,4 +182,71 @@ ggplot(bioinfo_data, aes(q_5)) +
     )
 ggsave("Graficos/survey_bio_q5.png")
 
-### datos parsed bioinfo info ----
+# Q6
+ggplot(bioinfo_data, aes(q_6)) +
+    geom_bar(fill = "#1F77B4") +
+    guides(fill = guide_legend(title = "Plataforma")) +
+    labs(y = "Respuestas", x = "", title = "") +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    theme(
+        text = element_text(size = 18),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+    )
+ggsave("Graficos/survey_bio_q6.png")
+
+# Q7
+ggplot(bioinfo_data, aes(q_7)) +
+    geom_bar(fill = "#1F77B4") +
+    guides(fill = guide_legend(title = "Plataforma")) +
+    labs(y = "Respuestas", x = "", title = "") +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    theme(
+        text = element_text(size = 18),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+    )
+ggsave("Graficos/survey_bio_q7.png")
+
+# Q8
+ggplot(bioinfo_data, aes(q_8)) +
+    geom_bar(fill = "#1F77B4") +
+    guides(fill = guide_legend(title = "Plataforma")) +
+    labs(y = "Respuestas", x = "", title = "") +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    theme(
+        text = element_text(size = 13),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+    )
+ggsave("Graficos/survey_bio_q8.png")
+
+# Q9
+
+survey_bioinfo_2 <- read_excel(dir_excel[1], sheet = 4)
+
+bioinfo_data_2 <- data.frame(
+    q_9 = as.character(survey_bioinfo_2$`Choose the area of expertise that you or other people in your team have`),
+    q_10 = as.character(survey_bioinfo_2$`Do you use HTS in other organisims besides SARS-CoV-2? If so, in which organisim are you applying HTS technology?`)
+)
+
+# Q9 plot
+ggplot(bioinfo_data_2, aes(q_9)) +
+    geom_bar(fill = "#1F77B4") +
+    guides(fill = guide_legend(title = "Plataforma")) +
+    labs(y = "Respuestas", x = "", title = "") +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    theme(
+        text = element_text(size = 18),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+    )
+ggsave("Graficos/survey_bio_q9.png")
+
+# Q10 plot
+ggplot(subset(bioinfo_data_2, q_10 != "NA"), aes(q_10)) +
+    geom_bar(fill = "#1F77B4") +
+    guides(fill = guide_legend(title = "Plataforma")) +
+    labs(y = "Respuestas", x = "", title = "") +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    theme(
+        text = element_text(size = 18),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+    )
+ggsave("Graficos/survey_bio_q10.png")
