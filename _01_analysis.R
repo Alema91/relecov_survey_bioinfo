@@ -89,8 +89,6 @@ ggplot(general_data, aes(x = comunidad, fill = centro)) +
     )
 ggsave("Graficos/survey_general.png")
 
-str(general_data)
-str(df)
 
 df <- data.frame(
     group = c("Male", "Female", "Child"),
@@ -198,7 +196,7 @@ ggsave("Graficos/survey_bio_q6.png")
 ggplot(bioinfo_data, aes(q_7)) +
     geom_bar(fill = "#1F77B4") +
     guides(fill = guide_legend(title = "Plataforma")) +
-    labs(y = "Respuestas", x = "", title = "") +
+    labs(y = "Answers", x = "", title = "") +
     geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
     theme(
         text = element_text(size = 18),
@@ -224,8 +222,10 @@ survey_bioinfo_2 <- read_excel(dir_excel[1], sheet = 4)
 
 bioinfo_data_2 <- data.frame(
     q_9 = as.character(survey_bioinfo_2$`Choose the area of expertise that you or other people in your team have`),
-    q_10 = as.character(survey_bioinfo_2$`Do you use HTS in other organisims besides SARS-CoV-2? If so, in which organisim are you applying HTS technology?`)
+    q_10 = as.character(survey_bioinfo_2$`Do you use HTS in other organisims besides SARS-CoV-2? If so, in which organisim are you applying HTS technology?`),
+    q_11 = as.character(survey_bioinfo_2$`Which of the following NGS applications are you currently using?`)
 )
+
 
 # Q9 plot
 ggplot(bioinfo_data_2, aes(q_9)) +
@@ -234,13 +234,52 @@ ggplot(bioinfo_data_2, aes(q_9)) +
     labs(y = "Respuestas", x = "", title = "") +
     geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
     theme(
-        text = element_text(size = 18),
+        text = element_text(size = 13),
         axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
     )
 ggsave("Graficos/survey_bio_q9.png")
 
 # Q10 plot
 ggplot(subset(bioinfo_data_2, q_10 != "NA"), aes(q_10)) +
+    geom_bar(fill = "#1F77B4") +
+    guides(fill = guide_legend(title = "Plataforma")) +
+    labs(y = "Respuestas", x = "", title = "") +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    theme(
+        text = element_text(size = 18),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+    )
+ggsave("Graficos/survey_bio_q10.png")
+
+# Q11 plot
+ggplot(subset(bioinfo_data_2, q_11 != "NA"), aes(q_11)) +
+    coord_flip() +
+    geom_bar(fill = "#1F77B4") +
+    guides(fill = guide_legend(title = "Plataforma")) +
+    labs(y = "Answers", x = "", title = "") +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = 0.5, hjust = -0.3) +
+    theme(
+        text = element_text(size = 18),
+        axis.text.x = element_text()
+    )
+ggsave("Graficos/survey_bio_q11.png")
+
+######### Sequencing info
+
+survey_bioinfo_sequencing <- read_excel(dir_excel[1], sheet = 5)
+
+sequencing_data <- data.frame(
+    id = as.character(sort(survey_bioinfo_sequencing$ID)),
+    q_11 = as.character(survey_bioinfo_sequencing$`Does your organization have a genomics unit?`),
+    q_12 = as.character(survey_bioinfo_sequencing$`Does your lab have its own sequencing machines?`),
+    q_13 = as.character(survey_bioinfo_sequencing$`Do you externalise sequencing?`),
+    q_14 = as.character(survey_bioinfo_sequencing$`Which sequencing platforms does your lab/unit use?`)
+)
+
+
+# Q11
+
+ggplot(sequencing_data, aes(q_11)) +
     geom_bar(fill = "#1F77B4") +
     guides(fill = guide_legend(title = "Plataforma")) +
     labs(y = "Respuestas", x = "", title = "") +
