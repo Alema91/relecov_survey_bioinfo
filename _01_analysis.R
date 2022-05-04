@@ -21,11 +21,11 @@ dir_excel <- list.files(path = "Data", pattern = "xlsx", full.names = TRUE, recu
 
 ### datos general ----
 
-survey_general <- read_excel(dir_excel[1], sheet = 2)
+survey_general <- read_excel(dir_excel[2], sheet = 2)
 
 ### datos parsed general ----
 
-level_comunidades <- c("CATALUÑA", "MADRID", "GALICIA", "VALENCIA", "BALEARES", "CANARIAS", "CANTABRIA", "CASTILLA LA MANCHA", "LA RIOJA")
+level_comunidades <- c("CATALUÑA", "MADRID", "GALICIA", "CASTILLA LA MANCHA", "VALENCIA", "ARAGÓN", "CANARIAS", "BALEARES", "CANTABRIA", "ANDALUCÍA", "ASTURIAS", "LA RIOJA", "MURCIA", "CASTILLA Y LEON", "PAÍS VASCO", "EXTREMADURA")
 level_centros <- c(
     "Hospital Joan XXIII",
     "Hospital Universitari Vall d’Hebron",
@@ -52,7 +52,6 @@ level_centros <- c(
 general_data <- data.frame(
     id = as.character(sort(survey_general$`Relecov-ID`)),
     comunidad = factor(survey_general$`Autonomous community`, levels = level_comunidades),
-    centro = factor(survey_general$`Center name`, levels = level_centros),
     fecha = excel_numeric_to_date(as.numeric(survey_general$fecha))
 )
 
@@ -90,19 +89,19 @@ ggplot(general_data, aes(x = comunidad, fill = centro)) +
 ggsave("Graficos/survey_general.png")
 
 
-df <- data.frame(
-    group = c("Male", "Female", "Child"),
-    value = c(25, 25, 50)
-)
+ggplot(general_data, aes(x = comunidad, fill = centro)) +
+    geom_bar() +
+    labs(x = "", y = "", title = "") +
+    theme(
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 6),
+        axis.text.y = element_text(size = 7)
+    )
+ggsave("Graficos/survey_general.png")
 
-
-ggplot(df, aes(x = "", y = value, fill = group)) +
-    geom_bar(width = 1, stat = "identity") +
-    coord_polar("y", start = 0)
 
 # Bioinfo info
 
-survey_bioinfo <- read_excel(dir_excel[1], sheet = 3)
+survey_bioinfo <- read_excel(dir_excel[2], sheet = 3)
 
 bioinfo_data <- data.frame(
     id = as.character(sort(survey_bioinfo$ID)),
@@ -125,69 +124,72 @@ ggplot(bioinfo_data, aes(q_1)) +
     geom_bar(fill = "#1F77B4") +
     guides(fill = guide_legend(title = "Plataforma")) +
     labs(y = "Respuestas", x = "", title = "") +
-    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), size = 10, vjust = 1) +
     theme(
-        text = element_text(size = 18),
-        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+        text = element_text(size = 45),
+        axis.text.x = element_text(angle = 90, vjust = 1, hjust = 1)
     )
-ggsave("Graficos/survey_bio_q1.png")
+ggsave("Graficos/survey_bio_q1.png", width = 50, height = 40, dpi = 500, units = c("cm"))
+
 
 # Q2
 ggplot(bioinfo_data, aes(q_2)) +
     geom_bar(fill = "#1F77B4") +
     guides(fill = guide_legend(title = "Plataforma")) +
     labs(y = "Respuestas", x = "", title = "") +
-    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), size = 10, vjust = 1) +
     theme(
-        text = element_text(size = 18),
+        text = element_text(size = 45),
         axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
     )
-ggsave("Graficos/survey_bio_q2.png")
+ggsave("Graficos/survey_bio_q2.png", width = 50, height = 30, dpi = 500, units = c("cm"))
+
+
 
 # Q3
 ggplot(bioinfo_data, aes(q_3)) +
     geom_bar(fill = "#1F77B4") +
     guides(fill = guide_legend(title = "Plataforma")) +
     labs(y = "Respuestas", x = "", title = "") +
-    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), size = 10, vjust = 1) +
     theme(
-        text = element_text(size = 18),
+        text = element_text(size = 45),
         axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
     )
-ggsave("Graficos/survey_bio_q3.png")
+ggsave("Graficos/survey_bio_q3.png", width = 50, height = 30, dpi = 500, units = c("cm"))
 
 # Q4
 ggplot(bioinfo_data, aes(q_4)) +
     geom_bar(fill = "#1F77B4") +
     guides(fill = guide_legend(title = "Plataforma")) +
-    labs(y = "Respuestas", x = "", title = "") +
-    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    labs(y = "Answers", x = "", title = "") +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), size = 10, vjust = 0.5) +
     theme(
-        text = element_text(size = 18),
-        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+        text = element_text(size = 35),
+        axis.text.x = element_text(angle = 90, vjust = 1, hjust = 1)
     )
-ggsave("Graficos/survey_bio_q4.png")
+ggsave("Graficos/survey_bio_q4.png", width = 45, height = 35, dpi = 500, units = c("cm"))
 
 # Q5
 ggplot(bioinfo_data, aes(q_5)) +
     geom_bar(fill = "#1F77B4") +
     guides(fill = guide_legend(title = "Plataforma")) +
     labs(y = "Respuestas", x = "", title = "") +
-    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), size = 10, vjust = 1) +
     theme(
-        text = element_text(size = 18),
+        text = element_text(size = 22),
         axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
     )
-ggsave("Graficos/survey_bio_q5.png")
+ggsave("Graficos/survey_bio_q5.png", width = 20, height = 30, dpi = 500, units = c("cm"))
 
 # Q6
 ggplot(bioinfo_data, aes(q_6)) +
     geom_bar(fill = "#1F77B4") +
     guides(fill = guide_legend(title = "Plataforma")) +
-    labs(y = "Respuestas", x = "", title = "") +
-    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), vjust = -0.5, hjust = 0.5) +
+    labs(y = "Answers", x = "", title = "") +
+    geom_text(stat = "count", position = position_stack(), aes(label = after_stat(count)), size = 5, vjust = -0.5, hjust = 0.5) +
     theme(
-        text = element_text(size = 18),
+        text = element_text(size = 22),
         axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
     )
 ggsave("Graficos/survey_bio_q6.png")
@@ -275,7 +277,6 @@ sequencing_data <- data.frame(
     q_13 = as.character(survey_bioinfo_sequencing$`Do you externalise sequencing?`),
     q_14 = as.character(survey_bioinfo_sequencing$`Which sequencing platforms does your lab/unit use?`)
 )
-
 
 # Q11
 
